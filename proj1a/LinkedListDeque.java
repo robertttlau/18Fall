@@ -17,14 +17,6 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
-    public LinkedListDeque(T x) {
-        sentinel = new StuffNode(x, null);
-        sentinel.next = new StuffNode(x, null);
-        sentinel.next.prev = sentinel;
-        sentinel.next.next = sentinel;
-        sentinel.prev = sentinel.next;
-        size = 1;
-    }
 
     public void addFirst(T x) {
         sentinel.next = new StuffNode(x, sentinel.next);
@@ -89,14 +81,14 @@ public class LinkedListDeque<T> {
     }
 
     public T get(int index) {
-        if (size != 0 & size >= index) {
+        if (size != 0 & size > index) {
             StuffNode p = sentinel;
             int i = 0;
             while (i != index) {
                 p = p.next;
                 i += 1;
             }
-            return sentinel.next.item;
+            return p.next.item;
         } else {
             return null;
         }
@@ -118,7 +110,7 @@ public class LinkedListDeque<T> {
         }
     }
 
-    public class StuffNode {
+    private class StuffNode {
         private T item;
         private StuffNode next;
         private StuffNode prev;
