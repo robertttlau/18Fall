@@ -43,11 +43,7 @@ public class LinkedListDeque<T> {
     }
 
     public boolean isEmpty() {
-        if (this.size == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.size == 0;
     }
 
     public int size() {
@@ -123,9 +119,9 @@ public class LinkedListDeque<T> {
     }
 
     public class StuffNode {
-        public T item;
-        public StuffNode next;
-        public StuffNode prev;
+        private T item;
+        private StuffNode next;
+        private StuffNode prev;
 
         public StuffNode(T i, StuffNode n) {
             item = i;
