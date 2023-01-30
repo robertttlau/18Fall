@@ -40,6 +40,9 @@ public class ArrayDeque<T> {
         items[nextFirst] = x;
         size = size + 1;
         nextFirst -= 1;
+        if (nextFirst < 0) {
+            nextFirst = items.length - 1;
+        }
     }
 
     /**
@@ -52,7 +55,10 @@ public class ArrayDeque<T> {
 
         items[nextLast] = x;
         size = size + 1;
-        nextLast -= 1;
+        nextLast += 1;
+        if (nextLast > items.length - 1) {
+            nextLast = 0;
+        }
     }
 
     public boolean isEmpty() {
