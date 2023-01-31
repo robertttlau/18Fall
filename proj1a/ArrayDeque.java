@@ -187,14 +187,14 @@ public class ArrayDeque<T> {
         int j = nextFirst + 1;
         int index = 0;
         while (index < i) {
+            j += 1;
+            index += 1;
             if (j == items.length) {
                 j = 0;
             }
-            j += 1;
-            index += 1;
         }
-        System.out.print(items[j]);
+        System.out.println(items[j]);
         return items[j];
     }
-
 }
+
