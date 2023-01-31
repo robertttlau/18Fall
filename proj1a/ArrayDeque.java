@@ -193,7 +193,8 @@ public class ArrayDeque<T> {
             j += 1;
             index += 1;
         }
-        return items[j - 1];
+        System.out.print(items[j]);
+        return items[j];
     }
 
 }
