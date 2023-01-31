@@ -23,7 +23,7 @@ public class ArrayDeque<T> {
     /**
      * Resizes the underlying array to the target capacity.
      */
-    public void resize(int capacity) {
+    private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
         if (nextFirst == items.length - 1) {
             System.arraycopy(items, 0, a, 0, items.length);
@@ -83,14 +83,14 @@ public class ArrayDeque<T> {
      */
     public void printDeque() {
         int i = nextFirst + 1;
-        int print_num = 0;
-        while (print_num <= size) {
+        int printNum = 0;
+        while (printNum <= size) {
             if (i == items.length) {
                 i = 0;
             }
             System.out.print(items[i] + " ");
             i += 1;
-            print_num += 1;
+            printNum += 1;
         }
     }
 
@@ -108,6 +108,9 @@ public class ArrayDeque<T> {
                 items[0] = null;
                 size = size - 1;
                 nextFirst = 0;
+                if (size < items.length / 3) {
+                    resize(size / 2);
+                }
                 return first;
             }
         } else {
@@ -118,9 +121,13 @@ public class ArrayDeque<T> {
                 items[nextFirst + 1] = null;
                 nextFirst += 1;
                 size = size - 1;
+                if (size < items.length / 3) {
+                    resize(size / 2);
+                }
                 return first;
             }
         }
+
     }
 
     /**
@@ -132,11 +139,14 @@ public class ArrayDeque<T> {
             if (items[items.length - 1] == null) {
                 return null;
             } else {
-                T Last = items[items.length - 1];
+                T last = items[items.length - 1];
                 items[items.length - 1] = null;
                 size = size - 1;
                 nextLast = items.length - 1;
-                return Last;
+                if (size < items.length / 3) {
+                    resize(size / 2);
+                }
+                return last;
             }
         } else {
             if (items[nextLast - 1] == null) {
@@ -146,6 +156,9 @@ public class ArrayDeque<T> {
                 items[nextLast - 1] = null;
                 nextLast -= 1;
                 size = size - 1;
+                if (size < items.length / 3) {
+                    resize(size / 2);
+                }
                 return Last;
             }
         }
@@ -156,7 +169,16 @@ public class ArrayDeque<T> {
      * Gets the ith item in the list (0 is the front).
      */
     public T get(int i) {
-        return items[i];
+        int j = nextFirst + 1;
+        int index = 0;
+        while (index < i) {
+            if (j == items.length) {
+                j = 0;
+            }
+            j += 1;
+            index += 1;
+        }
+        return items[j - 1];
     }
 
 }
