@@ -23,11 +23,19 @@ public class ArrayDeque<T> {
     /**
      * Resizes the underlying array to the target capacity.
      */
-    private void resize(int capacity) {
+    public void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        System.arraycopy(items, nextFirst + 1, a, nextFirst + 1, size);
+        if (nextFirst == items.length - 1) {
+            System.arraycopy(items, 0, a, 0, items.length);
+        } else {
+            System.arraycopy(items, nextFirst + 1, a, 0, items.length - nextFirst - 1);
+            System.arraycopy(items, 0, a, items.length - nextFirst - 1, nextLast);
+        }
         items = a;
+        nextFirst = items.length - 1;
+        nextLast = size;
     }
+
 
     /**
      * Inserts X into the front of the list.
@@ -36,7 +44,6 @@ public class ArrayDeque<T> {
         if (size == items.length) {
             resize(size * 2);
         }
-
         items[nextFirst] = x;
         size = size + 1;
         nextFirst -= 1;
@@ -52,7 +59,6 @@ public class ArrayDeque<T> {
         if (size == items.length) {
             resize(size * 2);
         }
-
         items[nextLast] = x;
         size = size + 1;
         nextLast += 1;
@@ -62,10 +68,7 @@ public class ArrayDeque<T> {
     }
 
     public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        }
-        return false;
+        return this.size == 0;
     }
 
     /**
@@ -80,27 +83,43 @@ public class ArrayDeque<T> {
      */
     public void printDeque() {
         int i = nextFirst + 1;
-        while (i <= nextLast - 1) {
+        int print_num = 0;
+        while (print_num <= size) {
+            if (i == items.length) {
+                i = 0;
+            }
             System.out.print(items[i] + " ");
             i += 1;
+            print_num += 1;
         }
     }
+
 
     /**
      * Removes and returns the item at the front of the deque.
      * If no such item exists, returns null.
      */
     public T removeFirst() {
-        if (items[nextFirst + 1] == null) {
-            return null;
-        } else {
-            T first = items[nextFirst + 1];
-            items[nextFirst + 1] = null;
-            size = size - 1;
-            if (size <= 0.25 * items.length) {
-                resize(size / 2);
+        if (nextFirst + 1 == items.length) {
+            if (items[0] == null) {
+                return null;
+            } else {
+                T first = items[0];
+                items[0] = null;
+                size = size - 1;
+                nextFirst = 0;
+                return first;
             }
-            return first;
+        } else {
+            if (items[nextFirst + 1] == null) {
+                return null;
+            } else {
+                T first = items[nextFirst + 1];
+                items[nextFirst + 1] = null;
+                nextFirst += 1;
+                size = size - 1;
+                return first;
+            }
         }
     }
 
@@ -109,16 +128,26 @@ public class ArrayDeque<T> {
      * If no such item exists, returns null.
      */
     public T removeLast() {
-        if (items[nextLast - 1] == null) {
-            return null;
-        } else {
-            T last = items[nextLast - 1];
-            items[nextLast - 1] = null;
-            size = size - 1;
-            if (size <= 0.25 * items.length) {
-                resize(size / 2);
+        if (nextLast == 0) {
+            if (items[items.length - 1] == null) {
+                return null;
+            } else {
+                T Last = items[items.length - 1];
+                items[items.length - 1] = null;
+                size = size - 1;
+                nextLast = items.length - 1;
+                return Last;
             }
-            return last;
+        } else {
+            if (items[nextLast - 1] == null) {
+                return null;
+            } else {
+                T Last = items[nextLast - 1];
+                items[nextLast - 1] = null;
+                nextLast -= 1;
+                size = size - 1;
+                return Last;
+            }
         }
     }
 
