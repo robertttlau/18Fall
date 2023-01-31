@@ -108,8 +108,8 @@ public class ArrayDeque<T> {
                 items[0] = null;
                 size = size - 1;
                 nextFirst = 0;
-                if (size < items.length / 3) {
-                    resize(size / 2);
+                if (size <= items.length / 4) {
+                    resize(items.length / 2);
                 }
                 return first;
             }
@@ -121,8 +121,8 @@ public class ArrayDeque<T> {
                 items[nextFirst + 1] = null;
                 nextFirst += 1;
                 size = size - 1;
-                if (size < items.length / 3) {
-                    resize(size / 2);
+                if (size <= items.length / 4) {
+                    resize(items.length / 2);
                 }
                 return first;
             }
@@ -143,8 +143,8 @@ public class ArrayDeque<T> {
                 items[items.length - 1] = null;
                 size = size - 1;
                 nextLast = items.length - 1;
-                if (size < items.length / 3) {
-                    resize(size / 2);
+                if (size <= items.length / 4) {
+                    resize(items.length / 2);
                 }
                 return last;
             }
@@ -152,14 +152,14 @@ public class ArrayDeque<T> {
             if (items[nextLast - 1] == null) {
                 return null;
             } else {
-                T Last = items[nextLast - 1];
+                T last = items[nextLast - 1];
                 items[nextLast - 1] = null;
                 nextLast -= 1;
                 size = size - 1;
-                if (size < items.length / 3) {
-                    resize(size / 2);
+                if (size <= items.length / 4) {
+                    resize(items.length / 2);
                 }
-                return Last;
+                return last;
             }
         }
     }
