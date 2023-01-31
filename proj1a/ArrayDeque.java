@@ -185,6 +185,9 @@ public class ArrayDeque<T> {
      */
     public T get(int i) {
         int j = nextFirst + 1;
+        if (j == items.length) {
+            j = 0;
+        }
         int index = 0;
         while (index < i) {
             j += 1;
